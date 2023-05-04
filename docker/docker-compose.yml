@@ -55,3 +55,20 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  polar-redis:
+    image: "redis:7.0"
+    container_name: "polar-redis"
+    ports:
+      - 6379:6379
+
+  polar-rabbitmq:
+    image: "rabbitmq:3.10-management"
+    container_name: polar-rabbitmq
+    ports:
+      # Port where RabbitMQ listings for AMQP requests
+      - 5672:5672
+      # Port where RabbitMQ management console is accessible# 
+      - 15672:15672
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
